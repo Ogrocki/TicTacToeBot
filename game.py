@@ -51,24 +51,36 @@ def checkForWinner(board):
 		board.winner='O'
 	if(board.board[2]=='O' and board.board[4]=='O' and board.board[6]=='O'):
 		board.winner='O'
-
+	if(board.board[0]!=' ' and board.board[1]!=' ' and board.board[2]!=' ' and board.board[3]!=' ' and board.board[4]!=' ' and board.board[5]!=' ' and board.board[6]!=' ' and board.board[7]!=' ' and board.board[8]!=' '):
+		board.winner='Draw'
 def playAction(board,move, player):
 	#Takes a board and plays a move if its legal, does nothing otherwise, move is from 0-9
-	# 1 2 3
-	# 4 5 6
-	# 7 8 9
+	# 0 1 2
+	# 3 4 5
+	# 6 7 8
 	#Player is X or O
 	if(board.board[move]==' ' and player=='X'):
 		board.board[move]=player
 	if(board.board[move]==' ' and player=='O'):
 		board.board[move]=player
+	checkForWinner(board)
+
+def playerVsPlayer(board):
+	#Players take turns enter a value from 0-8 game ends when a player makes a row of three
+	while(board.winner==None):
+		attack=0
+		attack=input("Player1:")
+		playAction(board,int(attack), 'X')
+		printBoard(board)
+		if(board.winner==None):
+			attack=0
+			attack=input("Player2:")
+			playAction(board,int(attack), 'O')
+			printBoard(board)
+
+
 board=Board()
 
 printBoard(board)
-playAction(board,1,'X')
-playAction(board,0,'X')
-playAction(board,2,'X')
-board.board[0]='X'
-printBoard(board)
-checkForWinner(board)
+playerVsPlayer(board)
 printBoard(board)
